@@ -1,8 +1,19 @@
 <?php
 
+// \Auth::loginUsingId(1);
 
 Route::get('/', 'PostsController@index');
-Route::get('/posts/{post}', 'PostsController@show');
+Route::get('posts/create', 'PostsController@create');
+Route::get('posts/{post}/edit', 'PostsController@edit');
+Route::patch('posts/{post}', 'PostsController@update');
+
+
+Route::get('posts/{post}', 'PostsController@show');
+
+
+Route::post('posts', 'PostsController@store');
+
+Route::post('posts/{post}/comments', 'CommentsController@store');
 
 // Model Post
 // migration create_posts_table

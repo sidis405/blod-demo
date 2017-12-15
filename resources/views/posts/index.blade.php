@@ -3,28 +3,31 @@
 
 @section('content')
 
-<div class="row">
-    <div class="col-sm-8 blog-main">
-
+<div class="col-md-8">
     @foreach($posts as $post)
+  <div class="post-preview">
+    <a href="/posts/{{ $post->id }}">
+      <h2 class="post-title">
+        {{ $post->title }}
+      </h2>
+      <p class="post-subtitle">
+        {{ $post->body }}
+      </p>
+    </a>
 
-    <div class="blog-post">
-        <h2 class="blog-post-title">
-            <a href="/posts/{{ $post->id }}">{{ $post->title }}</a>
-        </h2>
-        <p class="blog-post-meta">{{ $post->updated_at->diffForHumans() }}</p>
-        <p>
-            {{ $post->body }}
-        </p>
-    </div>
-
-    @endforeach
-    <nav>
-        <ul class="pager">
-            <li><a href="#">Previous</a></li>
-            <li><a href="#">Next</a></li>
-        </ul>
-    </nav>
+    @if(@auth()->user()->can('update', $post))
+      <a href="/posts/{{$post->id}}/edit"><span class="pull-right"><i class="fa fa-edit"></i> </span></a>
+    @endif
+    <p class="post-meta">Posted by
+      <a href="#">{{ $post->user->name }}</a>
+      on {{ $post->created_at->toFormattedDateString() }}</p>
+  </div>
+  @endforeach
+  <hr>
+  <!-- Pager -->
+  <div class="clearfix">
+    <a class="btn btn-primary float-right" href="#">Older Posts &rarr;</a>
+  </div>
 </div>
 
 @stop
